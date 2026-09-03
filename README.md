@@ -19,6 +19,45 @@ Solves two recurring problems:
   `route: "→ flora-queue"` when we kick something that way. Passive log, not a
   driver (extensible later if we want it to trigger steps).
 
+## Glossary — exact usage rules (pin this down when tagging)
+
+**Mental model:** `category` = the noun · `status` = the tense · `verdict` = the verdict · `rationale` = the reason · `route` = where to read more.
+
+### category — what kind of thing is it? (the physical type, NEVER the report's section letter)
+- **`tool`** — a library/utility you embed as a building block (Docling, MinerU, Whisper, Crawl4AI, LightRAG)
+- **`project`** — a standalone open-source app/framework you'd clone and run (DeepTutor, OpenMontage, TradingAgents, Sequoia-X)
+- **`agent-skill`** — a reusable agent skill (reverse-skill, feishu-bitable, finance-markets-research)
+- **`mcp`** — an MCP server (alphavantage-mcp-server, dbhub, email-mcp)
+- **`concept`** — an idea/framework/architecture, not code (tencentdb-agent-memory)
+
+**tool vs project:** `tool` = building block you embed in your own stack; `project` = a thing you'd stand up and run on its own. When genuinely unsure, use `project` (safer default for software you found).
+**Hard rule:** do NOT use the report's internal category letter (a=investment, b=education, c=productivity, d=infra, e=fun) as the registry `category`. Those letters organize a report body; they are not physical types.
+
+### status — where is it in the lifecycle?
+- **`seen`** — surfaced by a cron, logged to avoid re-discovery, NOT yet triaged. (The "inbox" state.)
+- **`researching`** — actively being evaluated (by us or Flora).
+- **`concluded`** — decision made; must have a real `verdict` + `rationale`.
+
+**seen → concluded:** promote only when there's a genuine verdict + rationale. `seen`/`pending` means "logged, judge later."
+
+### verdict — what did we conclude? (decision vocabulary, shared with Flora's queue)
+- **`adopt`** — yes, using it
+- **`trial`** — worth a real test-drive
+- **`watch`** — interesting; keep an eye on, no action now
+- **`reject`** — looked, decided no
+- **`pending`** — not yet decided (pairs with `status: seen`)
+- **`done`** — evaluated and complete (no further state)
+- **`duplicate`** — same entity re-surfaced; set this and point `route`/note at the canonical slug (prefer NOT adding a dup row if `check` already finds it)
+
+**adopt/trial/watch/reject/done** are terminal conclusions → must carry a `rationale`. **pending** = logged but judge later.
+
+### route + route_link — where did it go next? (passive pointer, not a driver)
+- `route` — human pointer, e.g. `→ adopted (smoke-pipeline)`, `→ wiki-agentic-stack deep-dive page`, `→ weekly digest`, `pending triage`
+- `route_link` — actual URL/path to the wiki page, Flora report, or Drive link
+
+### rationale — the short "why"
+1–2 lines, always present on `concluded` rows. The full analysis lives one hop away via `route_link`.
+
 ## Layout
 
 ```
